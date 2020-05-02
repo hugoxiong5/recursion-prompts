@@ -35,10 +35,6 @@ var arraySum = function(array) {
   // }
   // return arr[0] + arraySum(arr.slice(1, arr.length));
 
-  if (array.length === 0) {
-    return 0;
-  }
-
   let sum = 0;
 
   for (let i = 0; i < array.length; i++) {
@@ -84,8 +80,21 @@ var sumBelow = function(n) {
 // 6. Get the integers within a range (x, y).
 // range(2,9); // [3,4,5,6,7,8]
 var range = function(x, y) {
+  let nums = [];
 
+  if (y > x + 1) {
+    nums = [x + 1];
+    nums = nums.concat(range(x + 1, y));
+  }
+
+  if (x - 1 > y) {
+    nums = [x - 1];
+    nums = nums.concat(range(x - 1, y));
+  }
+
+  return nums;
 };
+
 
 // 7. Compute the exponent of a number.
 // The exponent of a number says how many times the base number is used as a factor.

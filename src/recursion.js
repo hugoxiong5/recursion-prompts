@@ -29,14 +29,30 @@ var sum = function(array) {
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
 var arraySum = function(array) {
-  const arr = array.flat(Infinity);
-  if (arr.length === 0) {
+  // const arr = array.flat(Infinity);
+  // if (arr.length === 0) {
+  //   return 0;
+  // }
+  // return arr[0] + arraySum(arr.slice(1, arr.length));
+
+  if (array.length === 0) {
     return 0;
   }
-  return arr[0] + arraySum(arr.slice(1, arr.length));
 
+  let sum = 0;
 
-  // probably could make this more recursive by going into the nested array itself (if the element is an array), might come back to this later
+  for (let i = 0; i < array.length; i++) {
+
+    if (array[i] instanceof Array) {
+      sum += arraySum(array[i]);
+    }
+
+    if (typeof array[i] === 'number') {
+      sum += array[i];
+    }
+ }
+
+ return sum;
 };
 
 // 4. Check if a number is even.
@@ -68,6 +84,7 @@ var sumBelow = function(n) {
 // 6. Get the integers within a range (x, y).
 // range(2,9); // [3,4,5,6,7,8]
 var range = function(x, y) {
+
 };
 
 // 7. Compute the exponent of a number.

@@ -34,10 +34,20 @@ var arraySum = function(array) {
     return 0;
   }
   return arr[0] + arraySum(arr.slice(1, arr.length));
+
+
+  // probably could make this more recursive by going into the nested array itself (if the element is an array), might come back to this later
 };
 
 // 4. Check if a number is even.
 var isEven = function(n) {
+  if (n === 0) {
+    return true;
+  }
+  if (n === 1) {
+    return false;
+  }
+  return isEven(Math.abs(n) - 2);
 };
 
 // 5. Sum all integers below a given integer.

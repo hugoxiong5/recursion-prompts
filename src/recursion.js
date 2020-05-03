@@ -440,6 +440,30 @@ var rMap = function(array, callback) {
 // countKeysInObj(obj, 'r') // 1
 // countKeysInObj(obj, 'e') // 2
 var countKeysInObj = function(obj, key) {
+
+  // use reduce?? > that would probably be easier, but not my own recursive function
+
+  let objCopy = JSON.parse(JSON.stringify(obj));
+
+  const currentKey = Object.keys(objCopy)[0];
+
+  if (currentKey === undefined) {
+    return 0;
+  }
+
+  let count = 0;
+
+  if (currentKey === key) {
+    count += 1;
+  }
+
+  if (typeof objCopy[currentKey] === 'object') {
+    count += countKeysInObj(objCopy[currentKey], key);
+  }
+
+  delete objCopy[currentKey];
+  return count + countKeysInObj(objCopy, key);
+
 };
 
 // 23. Write a function that counts the number of times a value occurs in an object.
@@ -447,11 +471,57 @@ var countKeysInObj = function(obj, key) {
 // countValuesInObj(obj, 'r') // 2
 // countValuesInObj(obj, 'e') // 1
 var countValuesInObj = function(obj, value) {
+
+  let objCopy = JSON.parse(JSON.stringify(obj));
+
+  const currentKey = Object.keys(objCopy)[0];
+
+  if (currentKey === undefined) {
+    return 0;
+  }
+
+  let count = 0;
+
+  if (objCopy[currentKey] === value) {
+    count += 1;
+  }
+
+  if (typeof objCopy[currentKey] === 'object') {
+    count += countValuesInObj(objCopy[currentKey], value);
+  }
+
+  delete objCopy[currentKey];
+  return count + countValuesInObj(objCopy, value);
+
 };
 
 // 24. Find all keys in an object (and nested objects) by a provided name and rename
 // them to a provided new name while preserving the value stored at that key.
 var replaceKeysInObj = function(obj, oldKey, newKey) {
+
+  function replaceIndexInObj(obj, oldKey, newKey, index) {
+    let currentKey = Object.keys(obj)[index];
+
+    if (currentKey === undefined) {
+      return 0;
+    }
+
+    if (currentKey === oldKey) {
+      obj[newKey] = obj[currentKey];
+      delete obj[currentKey];
+      currentKey = newKey;
+    }
+
+    if (typeof obj[currentKey] === 'object') {
+      replaceKeysInObj(obj[currentKey], oldKey, newKey);
+    }
+  }
+
+  for (let i = Object.keys(obj).length; i >= 0 ; i--) {
+    replaceIndexInObj(obj, oldKey, newKey, i)
+  }
+
+  return obj;
 };
 
 // 25. Get the first n Fibonacci numbers. In the Fibonacci sequence, each subsequent

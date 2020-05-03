@@ -130,21 +130,22 @@ var powerOfTwo = function(n) {
 
 // 9. Write a function that reverses a string.
 var reverse = function(string) {
-
   if (string.length === 1) {
     return string[0];
   }
   return string[string.length - 1] + reverse(string.slice(0, string.length - 1));
-
-  let reversedStr = '';
-  for (let i = string.length - 1; i >= 0; i--) {
-    reversedStr += string[i];
-  }
-  return reversedStr;
 };
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
+
+  // whatever, I just did the reversal recursion function above...
+  if (string.toLowerCase() === reverse(string).toLowerCase()) {
+    return true;
+  } else {
+    return false;
+  }
+
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
@@ -152,12 +153,54 @@ var palindrome = function(string) {
 // modulo(5,2) // 1
 // modulo(17,5) // 2
 // modulo(22,6) // 4
+
+// 78 % 453 > 78
+// -79 % 82 > -79
+// -275 % -502 > -275
+// -275 % -274 > -1
+// -4 % 2 > -0
+
 var modulo = function(x, y) {
+  if (y === 0) {
+    return NaN;
+  }
+
+  if (x < 0) {
+    return -modulo(-x,  y);
+  }
+
+  if (y < 0) {
+    return  modulo( x, -y);
+  }
+
+  if (x < y) {
+    return  x;
+  }
+
+  return modulo(x - y, y);
 };
 
 // 12. Write a function that multiplies two numbers without using the * operator or
 // Math methods.
 var multiply = function(x, y) {
+  if ( y === 0) {
+    return 0;
+  }
+  
+  if (x < 0 && y < 0) {
+    return -x + multiply(-x, -y - 1);
+  }
+
+  if (x < 0) {
+    return -(-x + multiply(-x, y -1));
+  }
+
+  if (y < 0) {
+    return -(x + multiply(x, -y -1));
+  }
+
+  return x + multiply(x, y - 1);
+
 };
 
 // 13. Write a function that divides two numbers without using the / operator or

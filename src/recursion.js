@@ -255,6 +255,29 @@ var divide = function(x, y) {
 // http://www.cse.wustl.edu/~kjg/cse131/Notes/Recursion/recursion.html
 // https://www.khanacademy.org/computing/computer-science/cryptography/modarithmetic/a/the-euclidean-algorithm
 var gcd = function(x, y) {
+
+  if (x < 0 || y < 0) {
+    return null;
+  }
+
+  let bigger = (x > y) ? x : y;
+  let smaller = (x < bigger) ? x : y;
+
+  let remainder = bigger % smaller;
+
+  if (remainder === 0 ) {
+    return smaller;
+  } else {
+    return gcd(smaller, remainder);
+  }
+
+  // let bigger = (x > y) ? x : y;
+
+  // for (let i = bigger; i > 0; i--) {
+  //   if (x % i === 0 && y % i === 0) {
+  //     return i;
+  //   }
+  // }
 };
 
 // 15. Write a function that compares each character of two strings and returns true if
@@ -262,15 +285,46 @@ var gcd = function(x, y) {
 // compareStr('house', 'houses') // false
 // compareStr('tomato', 'tomato') // true
 var compareStr = function(str1, str2) {
+
+  if (str1.length !== str2.length) {
+    return false;
+  }
+
+  if (str1 === '' && str2 === '') {
+    return true;
+  }
+
+  if (str1.length === 1) {
+    if (str1[0] === str2[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  if (str1[0] !== str2[0]) {
+    return false;
+  } else {
+    return compareStr(str1.slice(1, str1.length), str2.slice(1, str2.length));
+  }
+
 };
 
 // 16. Write a function that accepts a string and creates an array where each letter
 // occupies an index of the array.
 var createArray = function(str) {
+
+  if (str.length === 0) {
+    return [];
+  } else {
+    return [str[0]].concat(createArray( str.slice(1, str.length) ));
+  }
+
 };
 
 // 17. Reverse the order of an array
 var reverseArr = function(array) {
+
 };
 
 // 18. Create a new array with a given value and length.

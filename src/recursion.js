@@ -625,6 +625,12 @@ var capitalizeWords = function(array) {
 // 28. Given an array of strings, capitalize the first letter of each index.
 // capitalizeFirst(['car','poop','banana']); // ['Car','Poop','Banana']
 var capitalizeFirst = function(array) {
+  if (array.length === 0) {
+    return [];
+  }
+  let result = array[0];
+  result = result.replace(result[0], result[0].toUpperCase());
+  return [result].concat(capitalizeFirst(array.slice(1, array.length)));
 };
 
 // 29. Return the sum of all even numbers in an object containing nested objects.
@@ -637,16 +643,68 @@ var capitalizeFirst = function(array) {
 // };
 // nestedEvenSum(obj1); // 10
 var nestedEvenSum = function(obj) {
+  let objCopy = JSON.parse(JSON.stringify(obj));
+
+  const currentKey = Object.keys(objCopy)[0];
+
+  if (currentKey === undefined) {
+    return 0;
+  }
+
+  let sum = 0;
+
+  if (objCopy[currentKey] % 2 === 0) {
+    sum += objCopy[currentKey];
+  }
+
+  if (typeof objCopy[currentKey] === 'object') {
+    sum += nestedEvenSum(objCopy[currentKey]);
+  }
+
+  delete objCopy[currentKey];
+  return sum + nestedEvenSum(objCopy);
+
 };
 
 // 30. Flatten an array containing nested arrays.
 // flatten([1,[2],[3,[[4]]],5]); // [1,2,3,4,5]
 var flatten = function(array) {
-};
+
+  results = [];
+
+  for (let i = 0; i < array.length; i++) {
+
+    let value = array[i];
+
+    if (Array.isArray(value)) {
+      results = results.concat(flatten(value));
+    } else {
+      results.push(value);
+    }
+  }
+
+  return results;
+}
 
 // 31. Given a string, return an object containing tallies of each letter.
 // letterTally('potato'); // {p:1, o:2, t:2, a:1}
 var letterTally = function(str, obj) {
+
+  if (obj === undefined) {
+    obj = {};
+  }
+
+  if (str.length === 0) {
+    return obj;
+  }
+
+  if ( obj[str[0]] ) {
+    obj[str[0]]++;
+  } else {
+      obj[str[0]] = 1;
+  }
+
+  return letterTally(str.slice(1, str.length), obj);
 };
 
 // 32. Eliminate consecutive duplicates in a list. If the list contains repeated
@@ -655,6 +713,7 @@ var letterTally = function(str, obj) {
 // compress([1,2,2,3,4,4,5,5,5]) // [1,2,3,4,5]
 // compress([1,2,2,3,4,4,2,5,5,5,4,4]) // [1,2,3,4,2,5,4]
 var compress = function(list) {
+  
 };
 
 // 33. Augment every element in a list with a new value where each element is an array

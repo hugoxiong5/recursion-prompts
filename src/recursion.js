@@ -530,35 +530,23 @@ var replaceKeysInObj = function(obj, oldKey, newKey) {
 // Note: The 0 is not counted.
 var fibonacci = function(n) {
 
-  const results = [0, 1];
-
   if (n <= 0) {
     return null;
   }
 
   if (n === 1) {
-    return results;
+    return [0, 1];
   } else {
-    fibonacciSum(0, 1, n);
+    const seq = fibonacci(n-1);
+    const sum = seq[seq.length - 2] + seq[seq.length - 1];
+    seq.push(sum);
+    return seq;
   }
 
-  function fibonacciSum(first, second, end) {
-
-    if (results.length - 1 === end) {
-      return;
-    }
-
-    let sum = first + second;
-    results.push(sum);
-    fibonacciSum(second, sum, end);
-
-  };
-
-  return results;
 };
 
 
-// not sure how to do one recursive call to fibonnaci without helper function
+// not sure how to do one recursive call to fibonacci without helper function
 // const results = [0,1];
 
 // if (n <= 0) {
@@ -577,6 +565,35 @@ var fibonacci = function(n) {
 // results.push(sum);
 
 // fibonacci(n-1);
+
+
+// older solution using helper function:
+// const results = [0, 1];
+
+// if (n <= 0) {
+//   return null;
+// }
+
+// if (n === 1) {
+//   return results;
+// } else {
+//   fibonacciSum(0, 1, n);
+// }
+
+// function fibonacciSum(first, second, end) {
+
+//   if (results.length - 1 === end) {
+//     return;
+//   }
+
+//   let sum = first + second;
+//   results.push(sum);
+//   fibonacciSum(second, sum, end);
+
+// };
+
+// return results;
+
 
 
 // 26. Return the Fibonacci number located at index n of the Fibonacci sequence.

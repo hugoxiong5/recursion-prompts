@@ -430,8 +430,7 @@ var rMap = function(array, callback) {
   if (array.length === 0) {
     return [];
   }
-  const results = [];
-  results.push(callback(array[0]));
+  const results = [callback(array[0])];
   return results.concat(rMap(array.slice(1, array.length), callback));
 };
 
@@ -530,7 +529,55 @@ var replaceKeysInObj = function(obj, oldKey, newKey) {
 // fibonacci(5); // [0,1,1,2,3,5]
 // Note: The 0 is not counted.
 var fibonacci = function(n) {
+
+  const results = [0, 1];
+
+  if (n <= 0) {
+    return null;
+  }
+
+  if (n === 1) {
+    return results;
+  } else {
+    fibonacciSum(0, 1, n);
+  }
+
+  function fibonacciSum(first, second, end) {
+
+    if (results.length - 1 === end) {
+      return;
+    }
+
+    let sum = first + second;
+    results.push(sum);
+    fibonacciSum(second, sum, end);
+
+  };
+
+  return results;
 };
+
+
+// not sure how to do one recursive call to fibonnaci without helper function
+// const results = [0,1];
+
+// if (n <= 0) {
+//   return null;
+// }
+
+// if (n === 1) {
+//     return results;
+// }
+
+// if (results.length - 1 === n) {
+//   return results;
+// }
+
+// const sum = results[results.length - 2] + results[results.length - 1];
+// results.push(sum);
+
+// fibonacci(n-1);
+
 
 // 26. Return the Fibonacci number located at index n of the Fibonacci sequence.
 // [0,1,1,2,3,5,8,13,21]
@@ -538,6 +585,7 @@ var fibonacci = function(n) {
 // nthFibo(7); // 13
 // nthFibo(3); // 2
 var nthFibo = function(n) {
+
 };
 
 // 27. Given an array of words, return a new array containing each word capitalized.

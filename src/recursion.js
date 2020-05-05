@@ -545,7 +545,6 @@ var fibonacci = function(n) {
 
 };
 
-
 // not sure how to do one recursive call to fibonacci without helper function
 // const results = [0,1];
 
@@ -595,7 +594,6 @@ var fibonacci = function(n) {
 // return results;
 
 
-
 // 26. Return the Fibonacci number located at index n of the Fibonacci sequence.
 // [0,1,1,2,3,5,8,13,21]
 // nthFibo(5); // 5
@@ -603,12 +601,25 @@ var fibonacci = function(n) {
 // nthFibo(3); // 2
 var nthFibo = function(n) {
 
-};
+  if (n < 0) {
+    return null;
+  }
+
+  if (n === 0) {
+    return 0;
+  }
+
+  return fibonacci(n)[n];
+}
 
 // 27. Given an array of words, return a new array containing each word capitalized.
 // var words = ['i', 'am', 'learning', 'recursion'];
 // capitalizedWords(words); // ['I', 'AM', 'LEARNING', 'RECURSION']
 var capitalizeWords = function(array) {
+  if (array.length === 0) {
+    return [];
+  }
+  return [array[0].toUpperCase()].concat(capitalizeWords(array.slice(1, array.length)));
 };
 
 // 28. Given an array of strings, capitalize the first letter of each index.
